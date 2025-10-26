@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        #accessTokenDisplay {
+            background-color: #e9e9e9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            word-break: break-all;
+            text-align: left;
+            font-family: 'Courier New', Courier, monospace;
+            color: #555;
+        }
+        #tokenExpiryDisplay {
+            margin-top: 20px;
+            background-color: #e0f7fa; /* A light blue for contrast */
+            border: 1px solid #b2ebf2;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: left;
+            font-family: 'Courier New', Courier, monospace;
+            color: #00796b; /* A darker teal for text */
+            font-weight: bold;
+        }
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px; /* Adds space between the buttons */
+        }
+        .action-button {
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .logout-button {
+            background-color: #f44336; /* Red color for logout */
+        }
+        .validate-button {
+            background-color: #4CAF50; /* A nice green for validation */
+        }
+        .validate-button:hover {
+            background-color: #45a049;
+        }
+        .validate-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .action-button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Access Token</h1>
+        <div id="accessTokenDisplay">No access token found in URL fragment.</div>
+        <div id="tokenExpiryDisplay">Expiry date not available.</div>
+        <div class="button-container">
+            <button id="validateTokenButton" class="action-button validate-button" disabled>Validate Token</button>
+            <button id="logoutButton" class="action-button logout-button">Logout</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fragment = window.location.hash; // Get the URL fragment (e.g., #access_token=...)
+            const accessTokenDisplay = document.getElementById('accessTokenDisplay');
+            const tokenExpiryDisplay = document.getElementById('tokenExpiryDisplay');
+            const logoutButton = document.getElementById('logoutButton');
+            const validateTokenButton = document.getElementById('validateTokenButton');
+
+            // --- Token and Expiry Display Logic ---
+
+            if (fragment) {
+                // Remove the '#' prefix
+                const params = new URLSearchParams(fragment.substring(1));
+                const accessToken = params.get('access_token');
+
+                if (accessToken) {
+                    accessTokenDisplay.textContent = accessToken;
+                    validateTokenButton.disabled = false; // Enable the button if token exists
+                } else {
+                    accessTokenDisplay.textContent = 'Access token parameter not found in URL fragment.';
+                }
+
+                const expiresIn = params.get('expires_in');
+                if (expiresIn !== null) {
+                    const expiresInSeconds = parseInt(expiresIn, 10);
+                    if (!isNaN(expiresInSeconds)) {
+                        const expiryDate = new Date(Date.now() + expiresInSeconds * 1000);
+                        tokenExpiryDisplay.textContent = `Token expires on: ${expiryDate.toLocaleString()}`;
+                    } else {
+                        tokenExpiryDisplay.textContent = 'Invalid expires_in value.';
+                    }
+                } else {
+                    tokenExpiryDisplay.textContent = 'Expires_in parameter not found in URL fragment.';
+                }
+            } else {
+                accessTokenDisplay.textContent = 'No URL fragment found.';
+                tokenExpiryDisplay.textContent = 'No URL fragment found.';
+            }
+
+            // --- Logout Button Logic ---
+            if (logoutButton) {
+                logoutButton.addEventListener('click', () => {
+                    // Redirect to logout page
+                    window.location.href = '{{ logout_url }}';
+                });
+            }
+
+            // --- Validate Token Button Logic ---
+            if (validateTokenButton) {
+                validateTokenButton.addEventListener('click', () => {
+                    const token = accessTokenDisplay.textContent;
+                    if (token && !token.startsWith('No access token')) {
+                        // The base URL for the JWT.io debugger
+                        const debuggerUrl = `https://jwt.io/#debugger-io?token=${token}`;
+                        // Open the URL in a new tab
+                        window.open(debuggerUrl, '_blank');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,2686 @@
+{
+	"info": {
+		"_postman_id": "3e1ac8d9-bbfb-4a73-8d04-03ea824d9c7f",
+		"name": "MovieWorld API Test Suite",
+		"description": "A Postman collection for the MovieWorld API. It covers endpoints for Movies, Actors, and Roles, including RBAC tests.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48522686",
+		"_collection_link": "https://uwekeller-9721744.postman.co/workspace/7e11c368-7f6e-4f4a-82b7-6ee3d8b165eb/collection/48522686-3e1ac8d9-bbfb-4a73-8d04-03ea824d9c7f?action=share&source=collection_link&creator=48522686"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Get Token: Casting Assistant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response has access_token\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.access_token).to.not.be.empty;",
+									"    pm.collectionVariables.set(\"casting_assistant_token\", jsonData.access_token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password"
+								},
+								{
+									"key": "username",
+									"value": "casting.assistant@test.com"
+								},
+								{
+									"key": "password",
+									"value": "l$ksdf92q3wkmm&qlasdfuq23"
+								},
+								{
+									"key": "audience",
+									"value": "{{auth0_audience}}"
+								},
+								{
+									"key": "client_id",
+									"value": "{{auth0_client_id}}"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{auth0_client_secret}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{auth0_domain}}/oauth/token",
+							"protocol": "https",
+							"host": [
+								"{{auth0_domain}}"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Token: Casting Director",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response has access_token\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.access_token).to.not.be.empty;",
+									"    pm.collectionVariables.set(\"casting_director_token\", jsonData.access_token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password"
+								},
+								{
+									"key": "username",
+									"value": "casting.director@test.com"
+								},
+								{
+									"key": "password",
+									"value": "?w3qrnwerf7843w2rkl98wef,"
+								},
+								{
+									"key": "audience",
+									"value": "{{auth0_audience}}"
+								},
+								{
+									"key": "client_id",
+									"value": "{{auth0_client_id}}"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{auth0_client_secret}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{auth0_domain}}/oauth/token",
+							"protocol": "https",
+							"host": [
+								"{{auth0_domain}}"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Token: Executive Producer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response has access_token\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.access_token).to.not.be.empty;",
+									"    pm.collectionVariables.set(\"executive_producer_token\", jsonData.access_token);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password"
+								},
+								{
+									"key": "username",
+									"value": "executive.producer@test.com"
+								},
+								{
+									"key": "password",
+									"value": "9821m3i9k03kle2j430.,23io3as"
+								},
+								{
+									"key": "audience",
+									"value": "{{auth0_audience}}"
+								},
+								{
+									"key": "client_id",
+									"value": "{{auth0_client_id}}"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{auth0_client_secret}}"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{auth0_domain}}/oauth/token",
+							"protocol": "https",
+							"host": [
+								"{{auth0_domain}}"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Requests to obtain JWT access tokens for different user roles."
+		},
+		{
+			"name": "Movies",
+			"item": [
+				{
+					"name": "GET /movies",
+					"item": [
+						{
+							"name": "Get Movies (Success)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));",
+											"pm.test(\"Response is a paginated list of movies\", () => {",
+											"    const body = pm.response.json();",
+											"    pm.expect(body).to.have.property('movies').and.to.be.an('array');",
+											"    pm.expect(body).to.have.property('total_movies').and.to.be.a('number');",
+											"    pm.expect(body).to.have.property('current_page').and.to.be.a('number');",
+											"    pm.expect(body).to.have.property('total_pages').and.to.be.a('number');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{casting_assistant_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies?page=1&per_page=2",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Movies (Page does not exist)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", () => pm.response.to.have.status(404));",
+											"pm.test(\"Is a standard error response\", () => {",
+											"    const body = pm.response.json();",
+											"    pm.expect(body.success).to.be.false;",
+											"    pm.expect(body.error_code).to.eql('404');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{casting_assistant_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies?page=999&per_page=10",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "999"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Movies (Unauthenticated)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", () => pm.response.to.have.status(401));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "POST /movies",
+					"item": [
+						{
+							"name": "Create Movie (Success)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));",
+											"pm.test(\"Response contains the new movie\", () => {",
+											"    const body = pm.response.json();",
+											"    pm.expect(body).to.have.property('id');",
+											"    pm.expect(body.title).to.eql('The Matrix');",
+											"    pm.collectionVariables.set('new_movie_id', body.id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{executive_producer_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"The Matrix\",\n    \"release_date\": \"1999-03-31\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Movie (Invalid Data)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", () => pm.response.to.have.status(400));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{executive_producer_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Missing Release Date\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Movie (Unauthenticated)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", () => pm.response.to.have.status(401));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Unauthenticated Movie\",\n    \"release_date\": \"2030-01-01\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Movie (Forbidden)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", () => pm.response.to.have.status(403));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{casting_director_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Forbidden Movie\",\n    \"release_date\": \"2030-01-01\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GET /movies/{movie_id}",
+					"item": [
+						{
+							"name": "Get Movie by ID (Success)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));",
+											"pm.test(\"Response is the correct movie\", () => {",
+											"    const body = pm.response.json();",
+											"    pm.expect(body.id).to.eql(pm.collectionVariables.get('new_movie_id'));",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{casting_assistant_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"{{new_movie_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Movie by ID (Not Found)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", () => pm.response.to.have.status(404));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{casting_assistant_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/NOT_EXISTING_ID",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"NOT_EXISTING_ID"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Movie by ID (Unauthenticated)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", () => pm.response.to.have.status(401));",
+											"pm.test(\"Response indicates unauthenticated\", () => {",
+											"    const body = pm.response.json();",
+											"    pm.expect(body.success).to.be.false;",
+											"    pm.expect(body.error_code).to.eql('401');",
+											"    pm.expect(body.message).to.include('Authorization header is expected');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"{{new_movie_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PATCH /movies/{movie_id}",
+					"item": [
+						{
+							"name": "Patch Movie (Success)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));",
+											"pm.test(\"Movie title was updated\", () => {",
+											"    const body = pm.response.json();",
+											"    pm.expect(body.title).to.eql('The Matrix (Updated)');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{executive_producer_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"The Matrix (Updated)\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"{{new_movie_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Patch Movie (Invalid Data)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", () => pm.response.to.have.status(400));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{executive_producer_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"{{new_movie_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Patch Movie (Forbidden)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", () => pm.response.to.have.status(403));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{casting_assistant_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Forbidden Patch\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"{{new_movie_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Patch Movie (Unauthenticated)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", () => pm.response.to.have.status(401));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Unauthenticated Patch\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"{{new_movie_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PUT /movies/{movie_id}",
+					"item": [
+						{
+							"name": "Update Movie (Success)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));",
+											"pm.test(\"Movie was updated\", () => {",
+											"    const body = pm.response.json();",
+											"    pm.expect(body.title).to.eql('The Matrix Reloaded');",
+											"    pm.expect(body.release_date).to.eql('2003-05-15');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{executive_producer_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"The Matrix Reloaded\",\n    \"release_date\": \"2003-05-15\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"{{new_movie_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Movie (Invalid Data)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", () => pm.response.to.have.status(400));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{executive_producer_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"The Matrix Revolutions\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"{{new_movie_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Movie (Not Found)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", () => pm.response.to.have.status(404));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{executive_producer_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Non Existent Movie\",\n    \"release_date\": \"2025-01-01\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/NOT_EXISTING_ID",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"NOT_EXISTING_ID"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Movie (Unauthenticated)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", () => pm.response.to.have.status(401));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Unauthenticated Update\",\n    \"release_date\": \"2025-01-01\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"{{new_movie_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Movie (Forbidden)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", () => pm.response.to.have.status(403));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{casting_assistant_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Forbidden Update\",\n    \"release_date\": \"2025-01-01\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"{{new_movie_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Actors",
+			"item": [
+				{
+					"name": "POST /actors",
+					"item": [
+						{
+							"name": "Create Actor (Success)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));",
+											"pm.test(\"Response contains the new actor\", () => {",
+											"    const body = pm.response.json();",
+											"    pm.expect(body).to.have.property('id');",
+											"    pm.expect(body.name).to.eql('Morgan Freeman');",
+											"    pm.collectionVariables.set('new_actor_id', body.id);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{casting_director_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Morgan Freeman\",\n    \"birth_date\": \"1937-06-01\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/actors",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"actors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Actor (Invalid Data)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", () => pm.response.to.have.status(400));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{casting_director_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Incomplete Actor\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/actors",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"actors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Actor (Forbidden)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", () => pm.response.to.have.status(403));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{casting_assistant_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Forbidden Actor\",\n    \"birth_date\": \"1990-01-01\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/actors",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"actors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Actor (Unauthenticated)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", () => pm.response.to.have.status(401));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Unauthenticated Actor\",\n    \"birth_date\": \"2000-01-01\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/actors",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"actors"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GET /actors",
+					"item": [
+						{
+							"name": "Get Actors (Success)",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{casting_assistant_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/actors",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"actors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Actors (Page does not exist)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", () => pm.response.to.have.status(404));",
+											"pm.test(\"Is a standard error response\", () => {",
+											"    const body = pm.response.json();",
+											"    pm.expect(body.success).to.be.false;",
+											"    pm.expect(body.error_code).to.eql('404');",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{casting_assistant_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/actors?page=999&per_page=10",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"actors"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "999"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Actors (Unauthenticated)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", () => pm.response.to.have.status(401));"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/actors",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"actors"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Roles",
+			"item": [
+				{
+					"name": "Movie Roles (/movies/{movie_id}/roles)",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "Get Roles for Movie (Success)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));",
+													"pm.test(\"Response is a paginated list of roles\", () => {",
+													"    const body = pm.response.json();",
+													"    pm.expect(body).to.have.property('roles').and.to.be.an('array');",
+													"    pm.expect(body).to.have.property('total_roles').and.to.be.a('number');",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{casting_assistant_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}/roles",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"movies",
+												"{{new_movie_id}}",
+												"roles"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Roles for Movie (Not Found)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 404\", () => pm.response.to.have.status(404));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{casting_assistant_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/movies/NOT_EXISTING_ID/roles",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"movies",
+												"NOT_EXISTING_ID",
+												"roles"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Roles for Movie (Unauthenticated)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 401\", () => pm.response.to.have.status(401));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/movies/{{movie_id_for_role}}/roles",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"movies",
+												"{{movie_id_for_role}}",
+												"roles"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "POST",
+							"item": [
+								{
+									"name": "Create Role (Success)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));",
+													"pm.test(\"Response contains the new role\", () => {",
+													"    const body = pm.response.json();",
+													"    pm.expect(body).to.have.property('id');",
+													"    pm.expect(body.character).to.eql('Neo');",
+													"    pm.collectionVariables.set('new_role_id', body.id);",
+													"    pm.collectionVariables.set('movie_id_for_role', body.movie_id);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{casting_director_token}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"character\": \"Neo\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}/roles",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"movies",
+												"{{new_movie_id}}",
+												"roles"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Role (Invalid Data - Missing Character)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", () => pm.response.to.have.status(400));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{casting_director_token}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"actor_id\": \"{{new_actor_id}}\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}/roles",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"movies",
+												"{{new_movie_id}}",
+												"roles"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Role (Not Found - Movie)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 404\", () => pm.response.to.have.status(404));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{casting_director_token}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"character\": \"Ghost Role\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/movies/NOT_EXISTING_ID/roles",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"movies",
+												"NOT_EXISTING_ID",
+												"roles"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Role (Forbidden)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 403\", () => pm.response.to.have.status(403));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{casting_assistant_token}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"character\": \"Forbidden Role\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}/roles",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"movies",
+												"{{new_movie_id}}",
+												"roles"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Role (Unauthenticated)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 401\", () => pm.response.to.have.status(401));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"character\": \"Unauthenticated Role\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}/roles",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"movies",
+												"{{new_movie_id}}",
+												"roles"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "PATCH",
+							"item": [
+								{
+									"name": "Patch Role (Success)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));",
+													"pm.test(\"Character was updated\", () => {",
+													"    const body = pm.response.json();",
+													"    pm.expect(body.character).to.eql('Neo (The One)');",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{casting_director_token}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"character\": \"Neo (The One)\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/movies/{{movie_id_for_role}}/roles/{{new_role_id}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"movies",
+												"{{movie_id_for_role}}",
+												"roles",
+												"{{new_role_id}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Patch Role (Not Found - Movie)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 404\", () => pm.response.to.have.status(404));"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{casting_director_token}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"character\": \"Ghost Role\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/movies/NOT_EXISTING_ID/roles/{{new_role_id}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"movies",
+												"NOT_EXISTING_ID",
+												"roles",
+												"{{new_role_id}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Patch Role (Not Found - Role)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 404\", () => pm.response.to.have.status(404));"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{casting_director_token}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"character\": \"Ghost Role\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}/roles/NOT_EXISTING_ID",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"movies",
+												"{{new_movie_id}}",
+												"roles",
+												"NOT_EXISTING_ID"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Patch Role (Invalid Data - Empty character)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", () => pm.response.to.have.status(400));"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{casting_director_token}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"character\": \"\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}/roles/{{new_role_id}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"movies",
+												"{{new_movie_id}}",
+												"roles",
+												"{{new_role_id}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Patch Role (Forbidden)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 403\", () => pm.response.to.have.status(403));"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{casting_assistant_token}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"character\": \"Forbidden Role\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}/roles/{{new_role_id}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"movies",
+												"{{new_movie_id}}",
+												"roles",
+												"{{new_role_id}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Patch Role (Unauthenticated)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 401\", () => pm.response.to.have.status(401));"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"character\": \"Unauthenticated Role\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}/roles/{{new_role_id}}",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"movies",
+												"{{new_movie_id}}",
+												"roles",
+												"{{new_role_id}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Actor Roles (/actors/{actor_id}/roles)",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "Get Roles for Actor (Success)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));",
+													"pm.test(\"Response is a paginated list of roles\", () => {",
+													"    const body = pm.response.json();",
+													"    pm.expect(body).to.have.property('roles').and.to.be.an('array');",
+													"    pm.expect(body).to.have.property('total_roles').and.to.be.a('number');",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{casting_assistant_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/actors/{{new_actor_id}}/roles",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"actors",
+												"{{new_actor_id}}",
+												"roles"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Roles for Actor (Not Found)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 404\", () => pm.response.to.have.status(404));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{casting_assistant_token}}"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/actors/NOT_EXISTING_ID/roles",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"actors",
+												"NOT_EXISTING_ID",
+												"roles"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Roles for Actor (Unauthenticated)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 401\", () => pm.response.to.have.status(401));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/actors/{{new_actor_id}}/roles",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"actors",
+												"{{new_actor_id}}",
+												"roles"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			],
+			"description": "Tests for role sub-resources, nested under movies and actors."
+		},
+		{
+			"name": "Deletion",
+			"item": [
+				{
+					"name": "DELETE /movies/{movie_id}/roles/{role_id}",
+					"item": [
+						{
+							"name": "Delete Role (Success)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", () => pm.response.to.have.status(204));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{casting_director_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/{{movie_id_for_role}}/roles/{{new_role_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"{{movie_id_for_role}}",
+										"roles",
+										"{{new_role_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Role (Not Found)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", () => pm.response.to.have.status(404));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{casting_director_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/{{movie_id_for_role}}/roles/NOT_EXISTING_ID",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"{{movie_id_for_role}}",
+										"roles",
+										"NOT_EXISTING_ID"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Role (Forbidden)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", () => pm.response.to.have.status(403));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{casting_assistant_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/{{movie_id_for_role}}/roles/{{new_role_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"{{movie_id_for_role}}",
+										"roles",
+										"{{new_role_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Role (Unauthenticated)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", () => pm.response.to.have.status(401));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/{{movie_id_for_role}}/roles/{{new_role_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"{{movie_id_for_role}}",
+										"roles",
+										"{{new_role_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE /movies/{movie_id}",
+					"item": [
+						{
+							"name": "Delete Movie (Success)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", () => pm.response.to.have.status(204));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{executive_producer_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"{{new_movie_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Movie (Not Found)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", () => pm.response.to.have.status(404));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{executive_producer_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"{{new_movie_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Movie (Forbidden)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", () => pm.response.to.have.status(403));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{casting_director_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"{{new_movie_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Movie (Unauthenticated)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", () => pm.response.to.have.status(401));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/movies/{{new_movie_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"movies",
+										"{{new_movie_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DELETE /actors/{actor_id}",
+					"item": [
+						{
+							"name": "Delete Actor (Success)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", () => pm.response.to.have.status(204));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{casting_director_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/actors/{{new_actor_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"actors",
+										"{{new_actor_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Actor (Not Found)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", () => pm.response.to.have.status(404));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{casting_director_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/actors/NOT_EXISTING_ID",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"actors",
+										"NOT_EXISTING_ID"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Actor (Forbidden)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", () => pm.response.to.have.status(403));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{casting_assistant_token}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/actors/{{new_actor_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"actors",
+										"{{new_actor_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Actor (Unauthenticated)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", () => pm.response.to.have.status(401));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/actors/{{new_actor_id}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"actors",
+										"{{new_actor_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5000"
+		},
+		{
+			"key": "auth0_domain",
+			"value": "dev-1syaxqsv2ewrr52u.us.auth0.com"
+		},
+		{
+			"key": "auth0_audience",
+			"value": "movieworld-api"
+		},
+		{
+			"key": "auth0_client_id",
+			"value": "# SEE THE PROJECT SUBMISSION COMMENTS !!"
+		},
+		{
+			"key": "auth0_client_secret",
+			"value": "# SEE THE PROJECT SUBMISSION COMMENTS !!"
+		},
+		{
+			"key": "casting_assistant_token",
+			"value": ""
+		},
+		{
+			"key": "casting_director_token",
+			"value": ""
+		},
+		{
+			"key": "executive_producer_token",
+			"value": ""
+		},
+		{
+			"key": "new_movie_id",
+			"value": ""
+		},
+		{
+			"key": "new_actor_id",
+			"value": ""
+		},
+		{
+			"key": "new_role_id",
+			"value": ""
+		},
+		{
+			"key": "movie_id_for_role",
+			"value": ""
+		}
+	]
+}
