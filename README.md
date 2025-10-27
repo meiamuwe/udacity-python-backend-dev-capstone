@@ -159,7 +159,13 @@ The project follows a standard Flask application layout. Below is an overview of
 .
 ├── migrations/
 ├── tests/
-│   └── test_app.py
+│   └──  api
+│       ├── actors.py
+│       ├── movies.py
+│       ├── roles.py
+│       ├── auth.py
+│       ├── commons.py
+|       └── __init_py
 ├── app.py
 ├── auth.py
 ├── build_prod.sh
