@@ -14,6 +14,7 @@ source setup_env_prod.sh
 
 # Install all requirements 
 echo "Installing requirements..."
+pip install --upgrade pip
 pip install -r requirements.txt
 
 # Set up the database: Bring to current version

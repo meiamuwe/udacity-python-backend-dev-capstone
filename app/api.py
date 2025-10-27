@@ -141,16 +141,20 @@ def create_app(test_config=None):
             AUTH0_CALLBACK_SERVER,
             user_logout_internal_url,
         )
-
+        
         query_parameters = urlencode(
             {
                 "client_id": AUTH0_CLIENT_ID,
                 "returnTo": user_logout_external_url,
             }
         )
+        
         auth0_logout_with_redirect_url = (
-            f"https://{AUTH0_DOMAIN}/v2/logout?{query_parameters}"
+            f"https://{AUTH0_DOMAIN}/v2/logout?" + 
+            query_parameters
         )
+        
+        print("auth0_logout_with_redirect_url = ", auth0_logout_with_redirect_url)
 
         return render_template(
             "user-home.html", logout_url=auth0_logout_with_redirect_url
