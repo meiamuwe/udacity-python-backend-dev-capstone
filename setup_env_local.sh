@@ -9,7 +9,7 @@ export FLASK_APP=app
 export FLASK_DEBUG="True"
 
 # --- Database configuration
-export DATABASE_URL_TEST='postgresql://movieworld_tester:movieworld_tester@localhost/movieworld_test'
+export DATABASE_URL_TEST='postgresql://movieworld_test:movieworld_test@localhost/movieworld_test'
 
 # --- External Auth Provider configuration: Auth0
 export AUTH0_DOMAIN="dev-1syaxqsv2ewrr52u.us.auth0.com"

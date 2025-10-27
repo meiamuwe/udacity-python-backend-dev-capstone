@@ -4,9 +4,12 @@
 # Bulding the application in production
 ######################################################
 
+# Exit immediately if a command exits with a non-zero status.
+set -e
+
 # Set up environment variables
 echo "Setting up environment variables..."
-./setup_env_prod.sh
+source setup_env_prod.sh
 
 
 # Install all requirements 
