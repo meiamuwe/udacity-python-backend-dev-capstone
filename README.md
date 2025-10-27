@@ -113,8 +113,8 @@ The project includes a Postman testsuite to test the API. The MovieWorld API Tes
 
 To execute the tests, you need the tool Postman installed.
 
-The test suite is set up for local test and requires the definition of the following variables
-before executing the tests: 
+The test suite is by default set up for local test and requires the definition of the following variables
+before executing the tests (or to use the suite to test the production deployment): 
 
 | Variable | Purpose | Values  |
 |----------|---------|---------|
@@ -122,6 +122,8 @@ before executing the tests:
 | `auth0_client_id` | Auth0 client ID | You can find the required value in the project submission comments.|
 | `auth0_client_secret` | Auth0 client secret | You can find the required value in the project submission comments.|
 
+The test suite covers the required functionallity of the API extensively, including tests for authorization 
+and authentication.
 
 
 # Project dependencies
@@ -153,48 +155,293 @@ All required depencies are listed in [this file](requirements.txt).
 
 We require a PostgresDB installation.
 
-Execute the following commands to set up the database user and database. 
+Execute the following commands to set up the database user and database for local 
+development and tests: 
 
-```
-psql --username=postgres -a -f movieworld_db_test.sql
+```bash
+source setup_database_local.sh
 psql --username movieworld_test movieworld_test
 
 Enter password: movieworld_test
-
+```
 
 If you want some example data, you can use
 
-```
+```bash
 psql --username=movieworld_test -a -f movieworld_db_content.sql
 
 Enter password: movieworld_test
+```
+
+## Local development
+
+After check out the project, set up the required environment variables: 
+
+```bash
+# Additionally, set up the external Auth Provider configuration
+export AUTH0_CLIENT_ID="<See submission comments for the required value>"
+export AUTH0_CLIENT_SECRET="<See submission comments for the required value>"
 
 ```
 
+Then, you can build and run the application locally: 
+
+```bash
+source run_local.sh
+```
+
+This automatically, sets up all other environment variables, installs the required 
+dependencies, sets up the database in the latest version and starts the application
+server for testing locally. 
+
+You can then run the unittests locally: 
+
+```bash
+source run_tests.sh
+```
+
+You can also use the [provided Postman testsuite](MovieWorld-API-Tests.postman_collection.json) 
+to test the locally running API, see description `API Tests with Postman` above.
 
 
-# Instructions 
+# REST API documentation
 
-# External authentication and roles
+The API is served from the base URL `/api/v1`. All endpoints that require authentication expect a JWT in the `Authorization` header with the `Bearer` scheme.
 
+---
 
+## Movies
 
+### GET /movies
 
+*   **Description**: Retrieves a paginated list of all movies.
+*   **Permissions**: `get:movie` (Casting Assistant, Casting Director, Executive Producer)
+*   **Query Parameters**:
+    *   `page` (optional, integer): The page number to retrieve. Defaults to `1`.
+    *   `per_page` (optional, integer): The number of movies per page. Defaults to `10`.
+*   **Success Response (200 OK)**:
+    ```json
+    {
+        "success": true,
+        "movies": [
+            {
+                "id": 1,
+                "title": "Inception",
+                "release_date": "2010-07-16"
+            }
+        ],
+        "total_movies": 20,
+        "current_page": 1,
+        "total_pages": 2
+    }
+    ```
+*   **Failure Responses**:
+    *   `401 Unauthorized`: If the `Authorization` header is missing or invalid.
+    *   `404 Not Found`: If the requested `page` does not exist.
 
-## Sample login page at `Auth0`
+### POST /movies
 
+*   **Description**: Creates a new movie.
+*   **Permissions**: `add:movie` (Executive Producer)
+*   **Request Body**:
+    ```json
+    {
+        "title": "The Matrix",
+        "release_date": "1999-03-31"
+    }
+    ```
+*   **Success Response (200 OK)**: Returns the newly created movie object.
+    ```json
+    {
+        "success": true,
+        "id": 42,
+        "title": "The Matrix",
+        "release_date": "1999-03-31"
+    }
+    ```
+*   **Failure Responses**:
+    *   `400 Bad Request`: If `title` or `release_date` are missing or invalid.
+    *   `401 Unauthorized`: If the `Authorization` header is missing or invalid.
+    *   `403 Forbidden`: If the user's role does not have the `add:movie` permission.
 
+### GET /movies/{movie_id}
 
-To simulate a login with these users, you can use:
-*  [Login when running the application locally](http://localhost:5000/)
-*  [Login for the deployed application](https://movieworld-udacity-capstone.onrender.com/)
+*   **Description**: Retrieves the details of a specific movie.
+*   **Permissions**: `get:movie` (Casting Assistant, Casting Director, Executive Producer)
+*   **Success Response (200 OK)**:
+    ```json
+    {
+        "success": true,
+        "id": 42,
+        "title": "The Matrix",
+        "release_date": "1999-03-31"
+    }
+    ```
+*   **Failure Responses**:
+    *   `401 Unauthorized`: If the `Authorization` header is missing or invalid.
+    *   `404 Not Found`: If no movie with the given `movie_id` exists.
 
+### PATCH /movies/{movie_id}
 
-# TODO: RUBICS
+*   **Description**: Updates a movie's details. At least one field must be provided.
+*   **Permissions**: `modify:movie` (Casting Director, Executive Producer)
+*   **Request Body**:
+    ```json
+    {
+        "title": "The Matrix (Director's Cut)",
+        "release_date": "1999-04-01"
+    }
+    ```
+*   **Success Response (200 OK)**: Returns the updated movie object.
+*   **Failure Responses**:
+    *   `400 Bad Request`: If the request body is empty or contains invalid data (e.g., empty title).
+    *   `401 Unauthorized`: If the `Authorization` header is missing or invalid.
+    *   `403 Forbidden`: If the user's role does not have the `modify:movie` permission.
+    *   `404 Not Found`: If no movie with the given `movie_id` exists.
 
-Document project description in README file, including the following information:
-* Motivation for the project
-* URL location for the hosted API
-* Project dependencies, local development and hosting instructions,
-* Detailed instructions for scripts to set up authentication, install any project dependencies and run the development server.
-* Documentation of API behavior and RBAC controls
+### DELETE /movies/{movie_id}
+
+*   **Description**: Deletes a movie and all associated roles.
+*   **Permissions**: `delete:movie` (Executive Producer)
+*   **Success Response (204 No Content)**: An empty response body.
+*   **Failure Responses**:
+    *   `401 Unauthorized`: If the `Authorization` header is missing or invalid.
+    *   `403 Forbidden`: If the user's role does not have the `delete:movie` permission.
+    *   `404 Not Found`: If no movie with the given `movie_id` exists.
+
+---
+
+## Actors
+
+### GET /actors
+
+*   **Description**: Retrieves a paginated list of all actors.
+*   **Permissions**: `get:actor` (Casting Assistant, Casting Director, Executive Producer)
+*   **Query Parameters**:
+    *   `page` (optional, integer): The page number to retrieve. Defaults to `1`.
+    *   `per_page` (optional, integer): The number of actors per page. Defaults to `10`.
+*   **Success Response (200 OK)**:
+    ```json
+    {
+        "success": true,
+        "actors": [
+            {
+                "id": 1,
+                "name": "Keanu Reeves",
+                "birth_date": "1964-09-02"
+            }
+        ],
+        "total_actors": 50,
+        "current_page": 1,
+        "total_pages": 5
+    }
+    ```
+*   **Failure Responses**:
+    *   `401 Unauthorized`: If the `Authorization` header is missing or invalid.
+    *   `404 Not Found`: If the requested `page` does not exist.
+
+### POST /actors
+
+*   **Description**: Creates a new actor.
+*   **Permissions**: `add:actor` (Casting Director, Executive Producer)
+*   **Request Body**:
+    ```json
+    {
+        "name": "Morgan Freeman",
+        "birth_date": "1937-06-01"
+    }
+    ```
+*   **Success Response (200 OK)**: Returns the newly created actor object.
+*   **Failure Responses**:
+    *   `400 Bad Request`: If `name` or `birth_date` are missing or invalid.
+    *   `401 Unauthorized`: If the `Authorization` header is missing or invalid.
+    *   `403 Forbidden`: If the user's role does not have the `add:actor` permission.
+
+### DELETE /actors/{actor_id}
+
+*   **Description**: Deletes an actor. The actor cannot be deleted if they are assigned to any roles.
+*   **Permissions**: `delete:actor` (Casting Director, Executive Producer)
+*   **Success Response (204 No Content)**: An empty response body.
+*   **Failure Responses**:
+    *   `401 Unauthorized`: If the `Authorization` header is missing or invalid.
+    *   `403 Forbidden`: If the user's role does not have the `delete:actor` permission.
+    *   `404 Not Found`: If no actor with the given `actor_id` exists.
+    *   `409 Conflict`: If the actor is currently assigned to one or more roles.
+
+---
+
+## Roles
+
+Roles are sub-resources of movies.
+
+### GET /movies/{movie_id}/roles
+
+*   **Description**: Retrieves a paginated list of all roles for a specific movie.
+*   **Permissions**: `get:movie` (Casting Assistant, Casting Director, Executive Producer)
+*   **Success Response (200 OK)**:
+    ```json
+    {
+        "success": true,
+        "roles": [
+            {
+                "id": 101,
+                "character": "Neo",
+                "movie_id": 42,
+                "actor_id": 1
+            }
+        ],
+        "total_roles": 1,
+        "current_page": 1,
+        "total_pages": 1
+    }
+    ```
+*   **Failure Responses**:
+    *   `401 Unauthorized`: If the `Authorization` header is missing or invalid.
+    *   `404 Not Found`: If no movie with the given `movie_id` exists.
+
+### POST /movies/{movie_id}/roles
+
+*   **Description**: Creates a new role for a movie. The role can be created without an actor assigned.
+*   **Permissions**: `modify:movie` (Casting Director, Executive Producer)
+*   **Request Body**:
+    ```json
+    {
+        "character": "Neo",
+        "actor_id": 1 // Optional
+    }
+    ```
+*   **Success Response (200 OK)**: Returns the newly created role object.
+*   **Failure Responses**:
+    *   `400 Bad Request`: If `character` is missing or invalid.
+    *   `401 Unauthorized`: If the `Authorization` header is missing or invalid.
+    *   `403 Forbidden`: If the user's role does not have the `modify:movie` permission.
+    *   `404 Not Found`: If the `movie_id` or `actor_id` (if provided) does not exist.
+    *   `409 Conflict`: If a role with the same character name already exists for this movie.
+
+### PATCH /movies/{movie_id}/roles/{role_id}
+
+*   **Description**: Updates a role's details, such as changing the character name or assigning/unassigning an actor.
+*   **Permissions**: `modify:movie` (Casting Director, Executive Producer)
+*   **Request Body**:
+    ```json
+    {
+        "character": "Neo (The One)",
+        "actor_id": 1
+    }
+    ```
+*   **Success Response (200 OK)**: Returns the updated role object.
+*   **Failure Responses**:
+    *   `400 Bad Request`: If the request body is empty or contains invalid data.
+    *   `401 Unauthorized`: If the `Authorization` header is missing or invalid.
+    *   `403 Forbidden`: If the user's role does not have the `modify:movie` permission.
+    *   `404 Not Found`: If the `movie_id`, `role_id`, or `actor_id` (if provided) does not exist.
+
+### DELETE /movies/{movie_id}/roles/{role_id}
+
+*   **Description**: Deletes a specific role from a movie.
+*   **Permissions**: `modify:movie` (Casting Director, Executive Producer)
+*   **Success Response (204 No Content)**: An empty response body.
+*   **Failure Responses**:
+    *   `401 Unauthorized`: If the `Authorization` header is missing or invalid.
+    *   `403 Forbidden`: If the user's role does not have the `modify:movie` permission.
+    *   `404 Not Found`: If the `movie_id` or `role_id` does not exist.
