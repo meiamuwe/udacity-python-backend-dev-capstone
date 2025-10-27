@@ -91,10 +91,12 @@ For each role we defined a user for testing:
 |Executive Producer|`executive.producer@test.com`|`9821m3i9k03kle2j430.,23io3as`|
 
 
-
 # Link to hosted API
 
 The application is deployed on Render.com and can be reached using the following [host](https://movieworld-udacity-capstone.onrender.com). 
+
+Please note, for authentication and authorization, the app uses the *external service provider* [Auth0](https://auth0.com).
+
 
 # Demo of Deployed API
 
@@ -124,7 +126,10 @@ before executing the tests:
 
 # Project dependencies
 
-The project currently uses the following main library dependencies: 
+The project has been developed with Python 3.13.
+
+
+It uses the following main python libraries: 
 
 | Dependency         | Version   | Description                                                     |
 |--------------------|-----------|-----------------------------------------------------------------|
@@ -141,6 +146,7 @@ The project currently uses the following main library dependencies:
 
 All required depencies are listed in [this file](requirements.txt).
 
+
 # Local development and hosting instructions
 
 ## Setting up the local database
@@ -150,10 +156,10 @@ We require a PostgresDB installation.
 Execute the following commands to set up the database user and database. 
 
 ```
-psql --username=postgres -a -f movieworld_test.sql
-psql --username movieworld_tester movieworld_test
+psql --username=postgres -a -f movieworld_db_test.sql
+psql --username movieworld_test movieworld_test
 
-Enter password: movieworld_tester
+Enter password: movieworld_test
 
 ```
 
