@@ -101,7 +101,7 @@ def create_app(test_config=None):
     """
     @app.route("/", methods=["GET"])
     def index():
-        return redirect("user_login")
+        return redirect(url_for("user_login"))
     
     
     """
