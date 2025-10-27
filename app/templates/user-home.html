@@ -137,7 +137,7 @@
             if (logoutButton) {
                 logoutButton.addEventListener('click', () => {
                     // Redirect to logout page
-                    window.location.href = '{{ logout_url }}';
+                    window.location.href = '{{ logout_url | safe }}';
                 });
             }
 

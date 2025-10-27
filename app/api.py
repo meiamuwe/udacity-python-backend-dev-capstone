@@ -150,8 +150,7 @@ def create_app(test_config=None):
         )
         
         auth0_logout_with_redirect_url = (
-            f"https://{AUTH0_DOMAIN}/v2/logout?" + 
-            query_parameters
+            f"https://{AUTH0_DOMAIN}/v2/logout?{query_parameters}"
         )
         
         print("auth0_logout_with_redirect_url = ", auth0_logout_with_redirect_url)
