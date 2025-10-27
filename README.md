@@ -158,6 +158,12 @@ The project follows a standard Flask application layout. Below is an overview of
 ```
 .
 ├── migrations/
+├── app/
+│   ├── api.py
+│   ├── models.py
+│   ├── auth.py
+│   ├── helper.py
+|   └── __init_py
 ├── tests/
 │   └──  api
 │       ├── actors.py
@@ -166,28 +172,26 @@ The project follows a standard Flask application layout. Below is an overview of
 │       ├── auth.py
 │       ├── commons.py
 |       └── __init_py
-├── app.py
-├── auth.py
-├── build_prod.sh
-├── models.py
-├── MovieWorld-API-Tests.postman_collection.json
-├── movieworld_db_content.sql
 ├── README.md
 ├── requirements.txt
-├── run_local.sh
-├── run_tests.sh
 ├── setup_database_local.sh
 ├── setup_env_local.sh
-└── setup_env_prod.sh
+├── setup_env_prod.sh
+├── run_local.sh
+├── run_tests.sh
+├── build_prod.sh
+├── MovieWorld-API-Tests.postman_collection.json
+├── movieworld_db_and_user.sql
+└── movieworld_db_content.sql
 ```
 
 ### Key Files and Directories
 
-*   `app.py`: This is the heart of the application. It initializes the Flask app, sets up the database connection, configures CORS, and defines all the API endpoints (routes) for movies, actors, and roles. It also includes the application's error handlers.
+*   `app/api.py`: This is the heart of the application. It initializes the Flask app, sets up the database connection, configures CORS, and defines all the API endpoints (routes) for movies, actors, and roles. It also includes the application's error handlers.
 
-*   `models.py`: Contains the SQLAlchemy data models (`Movie`, `Actor`, `Role`). This file defines the database schema and the relationships between the tables.
+*   `app/models.py`: Contains the SQLAlchemy data models (`Movie`, `Actor`, `Role`). This file defines the database schema and the relationships between the tables.
 
-*   `auth.py`: This module handles all authentication and authorization logic. It includes functions for verifying JWTs received from Auth0 and decorator functions (`@requires_auth`) to protect endpoints based on user permissions.
+*   `app/auth.py`: This module handles all authentication and authorization logic. It includes functions for verifying JWTs received from Auth0 and decorator functions (`@requires_auth`) to protect endpoints based on user permissions.
 
 *   `tests/`: This directory contains all the unit tests for the application. The tests are written using Python's `unittest` module and are designed to be run against a separate test database.
 
@@ -201,6 +205,10 @@ The project follows a standard Flask application layout. Below is an overview of
 *   `requirements.txt`: Lists all the Python packages the project depends on.
 
 *   `MovieWorld-API-Tests.postman_collection.json`: A Postman collection for performing end-to-end tests on the API, covering all endpoints and RBAC rules.
+
+* `movieworld_db_and_user.sql`: Create database user and database for local development and testing
+
+* `movieworld_db_content.sql`: Add some sample data to the database (if needed).
 
 
 
