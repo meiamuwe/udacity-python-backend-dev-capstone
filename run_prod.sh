@@ -4,6 +4,13 @@
 # Run the application in production
 ######################################################
 
+# Exit immediately if a command exits with a non-zero status.
+set -e
+
+# Set up environment variables
+echo "Setting up environment variables..."
+source setup_env_prod.sh
+
 # Use the correct database for production
 export DATABASE_URL=$DATABASE_URL_PROD
 

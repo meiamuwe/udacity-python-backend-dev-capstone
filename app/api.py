@@ -95,8 +95,15 @@ def create_app(test_config=None):
     @app.route("/health", methods=["GET"])
     def health_check():
         return "Service is up!", 200
+        
+    """
+    Index
+    """
+    @app.route("/", methods=["GET"])
+    def index():
+        return redirect("user_login")
     
-
+    
     """
     User Login
     using an external Auth Provider (Auth0)

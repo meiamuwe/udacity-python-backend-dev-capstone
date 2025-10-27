@@ -161,7 +161,17 @@ psql --username movieworld_test movieworld_test
 
 Enter password: movieworld_test
 
+
+If you want some example data, you can use
+
 ```
+psql --username=movieworld_test -a -f movieworld_db_content.sql
+
+Enter password: movieworld_test
+
+```
+
+
 
 # Instructions 
 
@@ -176,8 +186,8 @@ Enter password: movieworld_test
 
 
 To simulate a login with these users, you can use:
-*  [Login when running the application locally](http://localhost:5000/login)
-*  [Login for the deployed application](https://movieworld-udacity-capstone.onrender.com/login)
+*  [Login when running the application locally](http://localhost:5000/)
+*  [Login for the deployed application](https://movieworld-udacity-capstone.onrender.com/)
 
 
 # TODO: RUBICS
