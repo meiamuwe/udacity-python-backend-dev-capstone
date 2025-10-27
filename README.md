@@ -149,7 +149,55 @@ It uses the following main python libraries:
 All required depencies are listed in [this file](requirements.txt).
 
 
-# Local development and hosting instructions
+# Local development
+
+## Project structure
+
+The project follows a standard Flask application layout. Below is an overview of the main directories and files to help you navigate the codebase.
+
+```
+.
+├── migrations/
+├── tests/
+│   └── test_app.py
+├── app.py
+├── auth.py
+├── build_prod.sh
+├── models.py
+├── MovieWorld-API-Tests.postman_collection.json
+├── movieworld_db_content.sql
+├── README.md
+├── requirements.txt
+├── run_local.sh
+├── run_tests.sh
+├── setup_database_local.sh
+├── setup_env_local.sh
+└── setup_env_prod.sh
+```
+
+### Key Files and Directories
+
+*   `app.py`: This is the heart of the application. It initializes the Flask app, sets up the database connection, configures CORS, and defines all the API endpoints (routes) for movies, actors, and roles. It also includes the application's error handlers.
+
+*   `models.py`: Contains the SQLAlchemy data models (`Movie`, `Actor`, `Role`). This file defines the database schema and the relationships between the tables.
+
+*   `auth.py`: This module handles all authentication and authorization logic. It includes functions for verifying JWTs received from Auth0 and decorator functions (`@requires_auth`) to protect endpoints based on user permissions.
+
+*   `tests/`: This directory contains all the unit tests for the application. The tests are written using Python's `unittest` module and are designed to be run against a separate test database.
+
+*   `migrations/`: This directory is automatically managed by `Flask-Migrate` and contains the database migration scripts. You should not need to edit these files manually.
+
+*   `*.sh` **Scripts**: These shell scripts are used to automate common tasks:
+    *   `run_local.sh`: Sets up the environment and starts the Flask development server for local work.
+    *   `build_prod.sh`: Prepares the application for a production deployment by installing dependencies, running database migrations, and executing tests.
+    *   `setup_*.sh`: Contain environment variable definitions for different environments (local, production) and database setup.
+
+*   `requirements.txt`: Lists all the Python packages the project depends on.
+
+*   `MovieWorld-API-Tests.postman_collection.json`: A Postman collection for performing end-to-end tests on the API, covering all endpoints and RBAC rules.
+
+
+
 
 ## Setting up the local database
 
@@ -165,7 +213,7 @@ psql --username movieworld_test movieworld_test
 Enter password: movieworld_test
 ```
 
-If you want some example data, you can use
+If you want some example data, you can later use **after starting the application** for the first time:
 
 ```bash
 psql --username=movieworld_test -a -f movieworld_db_content.sql
@@ -194,7 +242,7 @@ This automatically, sets up all other environment variables, installs the requir
 dependencies, sets up the database in the latest version and starts the application
 server for testing locally. 
 
-You can then run the unittests locally: 
+You can also run the unittests locally: 
 
 ```bash
 source run_tests.sh
